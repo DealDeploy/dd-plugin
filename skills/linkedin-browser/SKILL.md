@@ -7,6 +7,11 @@ description: DOM selectors, timing, JS patterns, and gotchas for LinkedIn browse
 
 Field-tested patterns and gotchas for automating LinkedIn via browser automation tools.
 
+## Browser Setup
+
+- **Headed only.** LinkedIn detects and blocks headless browsers. Always launch with `headless: false` (or equivalent). Headless mode will not work.
+- **Connect to the user's existing browser** instead of launching a new instance. This reuses their active LinkedIn session, avoiding login flows and reducing detection risk. Use CDP (Chrome DevTools Protocol) to attach to a browser the user already has open — e.g. `--remote-debugging-port=9222`.
+
 ## DOM & Selectors
 
 ### Stable selectors
