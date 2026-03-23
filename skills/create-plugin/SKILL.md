@@ -82,16 +82,26 @@ Greet the user warmly and ask how you can help them today.
 
 ### 5. Create publish script
 
-Create `publish.ts` — bumps patch version in `plugin.json`, commits, tags, and pushes:
+Create `publish.ts` — bumps patch version in both `plugin.json` and `marketplace.json`, commits, tags, and pushes:
 
 ```ts
 const pluginPath = new URL(".claude-plugin/plugin.json", import.meta.url).pathname;
+const marketplacePath = new URL(".claude-plugin/marketplace.json", import.meta.url).pathname;
+
 const plugin = await Bun.file(pluginPath).json();
+const marketplace = await Bun.file(marketplacePath).json();
 
 const [major, minor, patch] = plugin.version.split(".").map(Number);
 plugin.version = `${major}.${minor}.${patch + 1}`;
 
+for (const p of marketplace.plugins) {
+  if (p.name === plugin.name) {
+    p.version = plugin.version;
+  }
+}
+
 await Bun.write(pluginPath, JSON.stringify(plugin, null, 2) + "\n");
+await Bun.write(marketplacePath, JSON.stringify(marketplace, null, 2) + "\n");
 
 console.log(`Bumped version to ${plugin.version}`);
 
