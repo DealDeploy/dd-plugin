@@ -1,0 +1,151 @@
+---
+name: create-plugin
+description: Scaffold a complete Claude Code plugin with marketplace, GitHub repo, and publish script. Use when the user wants to create a new plugin, set up a plugin marketplace, or scaffold a plugin for a customer.
+---
+
+# Create Plugin
+
+Scaffold a Claude Code plugin end-to-end: directory structure, manifests, GitHub repo, and publish tooling.
+
+## Gather info
+
+Ask the user:
+
+1. **Plugin name** (kebab-case, e.g. `acme-tools`)
+2. **Description** (one sentence)
+3. **GitHub owner** (org or username to host the repo)
+4. **Directory** to create the plugin in (default: `./<plugin-name>`)
+
+## Steps
+
+### 1. Create directory structure
+
+```
+<plugin-name>/
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
+├── skills/
+│   └── hello/
+│       └── SKILL.md
+├── package.json
+└── publish.js
+```
+
+### 2. Create `.claude-plugin/plugin.json`
+
+```json
+{
+  "name": "<plugin-name>",
+  "description": "<description>",
+  "version": "1.0.0",
+  "author": {
+    "name": "<github-owner>"
+  }
+}
+```
+
+### 3. Create `.claude-plugin/marketplace.json`
+
+```json
+{
+  "name": "<plugin-name>",
+  "owner": {
+    "name": "<github-owner>"
+  },
+  "metadata": {
+    "description": "<description>"
+  },
+  "plugins": [
+    {
+      "name": "<plugin-name>",
+      "source": "./",
+      "description": "<description>",
+      "version": "1.0.0"
+    }
+  ]
+}
+```
+
+### 4. Create a starter skill
+
+Create `skills/hello/SKILL.md`:
+
+```markdown
+---
+description: Greet the user with a friendly message
+disable-model-invocation: true
+---
+
+Greet the user warmly and ask how you can help them today.
+```
+
+### 5. Create publish script
+
+Create `publish.js` — bumps patch version in `plugin.json`, commits, and pushes:
+
+```js
+const fs = require("fs");
+const path = require("path");
+const { execFileSync } = require("child_process");
+
+const pluginPath = path.join(__dirname, ".claude-plugin", "plugin.json");
+const plugin = JSON.parse(fs.readFileSync(pluginPath, "utf8"));
+
+const [major, minor, patch] = plugin.version.split(".").map(Number);
+plugin.version = `${major}.${minor}.${patch + 1}`;
+
+fs.writeFileSync(pluginPath, JSON.stringify(plugin, null, 2) + "\n");
+
+console.log(`Bumped version to ${plugin.version}`);
+
+execFileSync("git", ["add", "-A"], { stdio: "inherit" });
+execFileSync("git", ["commit", "-m", `v${plugin.version}`], { stdio: "inherit" });
+execFileSync("git", ["push"], { stdio: "inherit" });
+
+console.log(`Published v${plugin.version}`);
+```
+
+Create `package.json`:
+
+```json
+{
+  "name": "<plugin-name>",
+  "private": true,
+  "scripts": {
+    "publish": "node publish.js"
+  }
+}
+```
+
+### 6. Create private GitHub repo and push
+
+```bash
+git init
+git add -A
+git commit -m "Initial plugin scaffold"
+gh repo create <github-owner>/<plugin-name> --private --description "<description>" --source . --push
+```
+
+### 7. Show the user next steps
+
+Print this summary:
+
+---
+
+**Plugin created:** `<github-owner>/<plugin-name>` (private)
+
+**To install the plugin:**
+
+```
+/plugin marketplace add <github-owner>/<plugin-name>
+/plugin install <plugin-name>@<plugin-name>
+```
+
+**To grant access:** `gh repo add-collaborator <github-owner>/<plugin-name> <their-username>`
+
+**To add skills:** create folders in `skills/` with a `SKILL.md` file.
+
+**To publish updates:** `npm run publish`
+
+---

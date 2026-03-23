@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "publish": "node publish.js"
+    "publish": "bun publish.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"

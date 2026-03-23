@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "create-plugin": {
+      "source": "matiacone/dotfiles",
+      "sourceType": "github",
+      "computedHash": "d35995a02280a540cdf088d19f4bb140897eaff07a4382d527d9ebf833fc732b"
+    }
+  }
+}
