@@ -1,0 +1,17 @@
+{
+  "name": "dealdeploy",
+  "owner": {
+    "name": "DealDeploy"
+  },
+  "metadata": {
+    "description": "Deal Sourcing Superpowers"
+  },
+  "plugins": [
+    {
+      "name": "dealdeploy",
+      "source": "./",
+      "description": "Deal Sourcing Superpowers",
+      "version": "1.0.0"
+    }
+  ]
+}
