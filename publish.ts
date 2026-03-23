@@ -8,8 +8,10 @@ await Bun.write(pluginPath, JSON.stringify(plugin, null, 2) + "\n");
 
 console.log(`Bumped version to ${plugin.version}`);
 
-Bun.$`git add -A`.quiet();
-Bun.$`git commit -m v${plugin.version}`.quiet();
-Bun.$`git push`.quiet();
+await Bun.$`git add -A`.quiet();
+await Bun.$`git commit -m v${plugin.version}`.quiet();
+await Bun.$`git tag v${plugin.version}`.quiet();
+await Bun.$`git push`.quiet();
+await Bun.$`git push origin v${plugin.version}`.quiet();
 
 console.log(`Published v${plugin.version}`);
