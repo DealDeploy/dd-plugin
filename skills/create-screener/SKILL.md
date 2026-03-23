@@ -33,7 +33,7 @@ Based on everything learned in Stages 1-2, propose likely disqualifiers and ask 
 
 ### Stage 4: Firmographic filters
 
-Lock in hard constraints: geography (default US unless specified), employee count, funding stage or ownership type, and any other firmographic boundaries.
+Lock in hard constraints: geography (default US unless specified), employee count, funding stage or ownership type, and any other firmographic boundaries. Never suggest ARR, revenue, or any revenue-based filters -- these numbers are not reliably available for private companies.
 
 ### Stage 5: Gap fill
 
@@ -43,7 +43,11 @@ Review everything collected so far. If there are contradictions, missing specifi
 
 After completing all stages, use web search to find 3 real companies that match the spec. Do this automatically without asking permission.
 
-Present each company with a brief explanation of why it appears to match.
+Present companies ONE at a time. For each company, include:
+- The company name with a clickable URL to their website
+- A brief explanation of why it appears to match the spec
+
+Wait for the user's PASS/FAIL response on the current company before presenting the next one.
 
 ## Feedback loop
 
