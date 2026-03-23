@@ -1,15 +1,17 @@
 ---
 name: do-hubspot-task
 description: >
-  Fetch and complete HubSpot tasks via the HubSpot MCP. Use when the user wants to work through
-  their HubSpot tasks, complete tasks, or check what tasks are pending. Triggers on:
-  "HubSpot tasks", "do my tasks", "complete tasks", "mark task complete", "what tasks do I have".
+  Fetch and complete a single HubSpot task via the HubSpot MCP. Use when the user wants to
+  complete a HubSpot task, check what tasks are pending, or mark a task done. Triggers on:
+  "HubSpot task", "do my task", "complete task", "mark task complete", "next task".
 disable-model-invocation: true
 ---
 
-# Do HubSpot Tasks
+# Do HubSpot Task
 
-Fetch, process, and complete HubSpot tasks via the HubSpot MCP. The user may provide specific instructions on which tasks to complete or how to filter them. If no instructions are given, complete **all** incomplete tasks assigned to the current user that are due today or earlier.
+Fetch, process, and complete **exactly one** HubSpot task per invocation. NEVER process more than one task. If the user wants to complete multiple tasks, they must invoke this skill multiple times.
+
+The user may specify which task to complete. If no specific task is given, pick the oldest due task.
 
 ## 1. Identify Current User
 
@@ -37,21 +39,25 @@ search_crm_objects(
 
 If the user specified filters (e.g. by subject keyword, task type, date range), add those as additional filters. If no tasks found, report that and stop.
 
-## 3. Present Tasks
+## 3. Select One Task
 
-List the fetched tasks to the user with subject, type, due date, and body summary. If the user gave specific instructions on which tasks to process, filter to those. Otherwise, proceed with all.
+Pick **exactly one** task to process:
+- If the user specified which task, select that one.
+- Otherwise, select the task with the oldest `hs_timestamp` (earliest due).
+
+Present the selected task to the user with its subject, type, due date, and body summary. Do NOT process any other tasks.
 
 ## 4. Resolve Associated Records
 
-For each task, use `search_crm_objects` with an association filter to find the associated contact and/or company. Retrieve relevant properties like `firstname`, `lastname`, `email`, `company`, `jobtitle`, `hs_linkedin_url`.
+For the selected task, use `search_crm_objects` with an association filter to find the associated contact and/or company. Retrieve relevant properties like `firstname`, `lastname`, `email`, `company`, `jobtitle`, `hs_linkedin_url`.
 
-## 5. Execute Task Actions
+## 5. Execute Task Action
 
-Process each task based on its subject and body content. The task body (`hs_task_body`) contains instructions — strip HTML tags and trim whitespace. Follow the user's instructions on how to handle each task type. If no specific instructions were given, present the task details and ask the user what action to take.
+Process the single task based on its subject and body content. The task body (`hs_task_body`) contains instructions — strip HTML tags and trim whitespace. Follow the user's instructions on how to handle the task. If no specific instructions were given, present the task details and ask the user what action to take.
 
 ## 6. Mark Task Complete
 
-After successfully processing a task:
+After successfully processing the task:
 
 ```
 manage_crm_objects(
@@ -72,6 +78,7 @@ HubSpot update errors are non-blocking — log but don't stop.
 
 ## Guardrails
 
+- **ONE task per invocation** — never process more than one task, even if many are available
 - Never execute tasks assigned to another user
-- Verify `hubspot_owner_id` matches the current user before processing each task
+- Verify `hubspot_owner_id` matches the current user before processing the task
 - Completed tasks won't be re-processed (idempotent)
