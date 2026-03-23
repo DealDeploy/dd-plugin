@@ -9,7 +9,9 @@ Run a sourcing sprint that converts a vague company category into a detailed scr
 
 ## Interview protocol
 
-Interview one question at a time. Resolve each answer before moving on. Do not jump ahead. If the user answers a future-stage question early, capture it, acknowledge you captured it, and skip that question later.
+CRITICAL: Ask exactly ONE question per message. Never ask two or more questions in the same message. Wait for the user to answer before asking the next question. Resolve each answer fully before moving on.
+
+Do not jump ahead. If the user answers a future-stage question early, capture it, acknowledge you captured it, and skip that question later.
 
 Do not repeat progress after every turn. Only reflect the full picture back at two moments: (1) after all questions are answered and before searching for examples, and (2) at the very end when presenting the finished spec.
 
