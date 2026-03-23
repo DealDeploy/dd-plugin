@@ -1,3 +1,9 @@
+---
+name: send-connection-request
+description: Send a personalized LinkedIn connection request to a single profile
+disable-model-invocation: true
+---
+
 # Send Connection Request
 
 Send a personalized LinkedIn connection request to a single profile.
@@ -12,7 +18,7 @@ If any input is missing, ask the user before proceeding.
 
 ## Step 1: Read Browser Reference
 
-Read [../browser-automation-reference.md](../browser-automation-reference.md) before any browser interaction. This is mandatory.
+Read the `linkedin-browser` skill before any browser interaction. This is mandatory.
 
 ## Step 2: Navigate to Profile
 

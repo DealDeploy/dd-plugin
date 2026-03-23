@@ -1,3 +1,8 @@
+---
+name: linkedin-browser
+description: DOM selectors, timing, JS patterns, and gotchas for LinkedIn browser automation
+---
+
 # LinkedIn Browser Automation Reference
 
 Field-tested patterns and gotchas for automating LinkedIn via browser automation tools.

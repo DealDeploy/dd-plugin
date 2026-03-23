@@ -4,6 +4,7 @@ description: >
   Fetch and manage HubSpot tasks via the HubSpot MCP. Use when the user mentions HubSpot tasks,
   outreach tasks, "connect on LinkedIn" tasks, or needs to mark tasks complete. Triggers on:
   "HubSpot tasks", "outreach tasks", "fetch tasks", "mark task complete".
+disable-model-invocation: true
 ---
 
 # HubSpot Tasks
