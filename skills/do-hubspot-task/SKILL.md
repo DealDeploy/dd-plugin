@@ -4,7 +4,6 @@ description: >
   Fetch and complete a single HubSpot task via the HubSpot MCP. Use when the user wants to
   complete a HubSpot task, check what tasks are pending, or mark a task done. Triggers on:
   "HubSpot task", "do my task", "complete task", "mark task complete", "next task".
-disable-model-invocation: true
 ---
 
 # Do HubSpot Task

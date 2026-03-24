@@ -1,7 +1,6 @@
 ---
 name: create-plugin
 description: Scaffold a complete Claude Code plugin with marketplace, GitHub repo, and publish script. Use when the user wants to create a new plugin, set up a plugin marketplace, or scaffold a plugin for a customer.
-disable-model-invocation: true
 ---
 
 # Create Plugin

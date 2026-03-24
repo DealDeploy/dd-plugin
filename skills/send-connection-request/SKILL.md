@@ -1,7 +1,6 @@
 ---
 name: send-connection-request
 description: Send a personalized LinkedIn connection request to a single profile
-disable-model-invocation: true
 ---
 
 # Send Connection Request

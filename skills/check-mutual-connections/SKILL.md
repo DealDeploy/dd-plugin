@@ -1,7 +1,6 @@
 ---
 name: check-mutual-connections
 description: Scrape all mutual 1st and 2nd degree LinkedIn connections between the logged-in user and a target profile
-disable-model-invocation: true
 ---
 
 # Check Mutual Connections
