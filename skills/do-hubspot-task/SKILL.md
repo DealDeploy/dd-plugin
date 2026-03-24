@@ -52,7 +52,18 @@ For the selected task, use `search_crm_objects` with an association filter to fi
 
 ## 5. Execute Task Action
 
-Process the single task based on its subject and body content. The task body (`hs_task_body`) contains instructions — strip HTML tags and trim whitespace. Follow the user's instructions on how to handle the task. If no specific instructions were given, present the task details and ask the user what action to take.
+Process the single task based on its subject and body content. The task body (`hs_task_body`) contains instructions — strip HTML tags and trim whitespace.
+
+**CRITICAL: You MUST actually execute the task, not just describe it.** After reading the task instructions, identify every action required to fulfill them and **invoke all relevant tools and skills to carry out those actions immediately.** Do NOT simply summarize what needs to be done — DO IT.
+
+Examples of what "execute" means:
+- If the task says "send an email to the contact" → compose and send the email using the appropriate tool
+- If the task says "update the contact's job title" → call `manage_crm_objects` to update the property
+- If the task says "create a deal for this company" → call `manage_crm_objects` to create the deal
+- If the task says "research this company" → use web search, then log findings as a note on the record
+- If the task requires multiple actions → invoke ALL of them, not just the first one
+
+If the task instructions are ambiguous or you genuinely cannot determine what action to take, THEN ask the user. But if the instructions are clear, execute them without asking for confirmation first.
 
 ## 6. Mark Task Complete
 
