@@ -65,6 +65,10 @@ Examples of what "execute" means:
 
 If the task instructions are ambiguous or you genuinely cannot determine what action to take, THEN ask the user. But if the instructions are clear, execute them without asking for confirmation first.
 
+REMEMBER TO INVOKE ANY SKILLS RELVANT TO THE TASK.
+
+Never ask user for confirmation to execute the task — just do it. The user invoked this skill to get the task done, so get it done.
+
 ## 6. Mark Task Complete
 
 After successfully processing the task:
