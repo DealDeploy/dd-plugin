@@ -18,7 +18,7 @@ Call `get_user_details` to get the authenticated user's `ownerId`. If this fails
 
 ## 2. Fetch Tasks
 
-Build a `search_crm_objects` query for incomplete tasks owned by the current user:
+Build a `search_crm_objects` query for incomplete tasks owned by the current user that have the `CLAUDE:` prefix in the subject:
 
 ```
 search_crm_objects(
@@ -28,7 +28,8 @@ search_crm_objects(
       "filters": [
         { "propertyName": "hubspot_owner_id", "operator": "EQ", "value": "{owner_id}" },
         { "propertyName": "hs_task_status", "operator": "NEQ", "value": "COMPLETED" },
-        { "propertyName": "hs_timestamp", "operator": "LTE", "value": "{end_of_today_unix_ms}" }
+        { "propertyName": "hs_timestamp", "operator": "LTE", "value": "{end_of_today_unix_ms}" },
+        { "propertyName": "hs_task_subject", "operator": "CONTAINS_TOKEN", "value": "CLAUDE:" }
       ]
     }
   ],
@@ -36,7 +37,9 @@ search_crm_objects(
 )
 ```
 
-If the user specified filters (e.g. by subject keyword, task type, date range), add those as additional filters. If no tasks found, report that and stop.
+**CRITICAL: Only process tasks whose `hs_task_subject` starts with "CLAUDE: ".** After fetching results, verify that each task's subject begins with "CLAUDE: " (case-sensitive). Discard any tasks that don't match. This is a hard requirement — never process a task without the "CLAUDE: " prefix, even if the user asks you to.
+
+If the user specified additional filters (e.g. by subject keyword, task type, date range), add those as additional filters. If no tasks found, report that and stop.
 
 ## 3. Select One Task
 
