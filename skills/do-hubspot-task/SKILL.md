@@ -68,7 +68,13 @@ Examples of what "execute" means:
 
 If the task instructions are ambiguous or you genuinely cannot determine what action to take, THEN ask the user. But if the instructions are clear, execute them without asking for confirmation first.
 
-REMEMBER TO INVOKE ANY SKILLS RELVANT TO THE TASK.
+REMEMBER TO INVOKE ANY SKILLS RELEVANT TO THE TASK.
+
+Common mappings (not exhaustive):
+
+- Task body mentions "check mutuals" / "mutual connections" / "who do we know at" / "mutual connection lookup" → invoke `check-mutual-connections` (passes through associated contact's `hs_linkedin_url`, contact name, and associated company name + domain). The skill posts to Slack and tries headless first.
+- Task body asks for a LinkedIn connection request to a specific person → invoke `send-connection-request`.
+- Task body asks to send a personalized email → use the email tool directly with the contact's email property.
 
 Never ask user for confirmation to execute the task — just do it. The user invoked this skill to get the task done, so get it done.
 
