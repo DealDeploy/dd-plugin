@@ -10,7 +10,7 @@ Field-tested patterns and gotchas for automating LinkedIn via browser automation
 ## Browser Setup
 
 - **Headed only.** LinkedIn detects and blocks headless browsers. Always launch with `headless: false` (or equivalent). Headless mode will not work.
-- **Connect to the user's existing browser** instead of launching a new instance. This reuses their active LinkedIn session, avoiding login flows and reducing detection risk. Use CDP (Chrome DevTools Protocol) to attach to a browser the user already has open — e.g. `--remote-debugging-port=9222`.
+- **Connect to the user's existing browser** instead of launching a new instance. This reuses their active LinkedIn session, avoiding login flows and reducing detection risk. Reuse it through a browser-extension bridge that attaches to the open browser (Claude in Chrome, or the browse MCP). Never start or restart the user's browser with `--remote-debugging-port`: while that port is open, any program on the machine can drive every site they're signed in to.
 
 ## DOM & Selectors
 
